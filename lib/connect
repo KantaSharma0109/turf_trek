@@ -1,0 +1,2 @@
+adb pair 192.168.137.
+adb connect 192.168.137.

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "759324678452",
+    "project_id": "turf-trek-3d9dc",
+    "storage_bucket": "turf-trek-3d9dc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:759324678452:android:c1a515752bd3c52843ed61",
+        "android_client_info": {
+          "package_name": "com.example.turf_trek"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTwl0e8IhJTc8BYyB1F-7FfZETfBCS9L8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
