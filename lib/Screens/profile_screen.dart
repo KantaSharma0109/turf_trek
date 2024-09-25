@@ -60,6 +60,7 @@ class _UserProfileState extends State<UserProfile> {
             style: TextStyle(
               color: Colors.green.shade900,
               fontFamily: 'FontText',
+              fontSize: 25,
             ),
           ),
         ),
@@ -204,14 +205,14 @@ class _UserProfileState extends State<UserProfile> {
                         onTap: () => _showModalBottomSheet(context),
                       ),
 
-                      const SizedBox(
-                          height: 20), // Add some space between tiles
-                      CustomListTile(
-                        title: 'Invite a Friend',
-                        subtitle: 'Share the Turf Trek app',
-                        leadingIcon: Icons.share,
-                        onTap: () => _showModalBottomSheet(context),
-                      ),
+                      // const SizedBox(
+                      //     height: 20), // Add some space between tiles
+                      // CustomListTile(
+                      //   title: 'Invite a Friend',
+                      //   subtitle: 'Share the Turf Trek app',
+                      //   leadingIcon: Icons.share,
+                      //   onTap: () => _showModalBottomSheet(context),
+                      // ),
 
                       const SizedBox(height: 20),
 

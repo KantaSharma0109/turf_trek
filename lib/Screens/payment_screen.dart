@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:turf_trek/model/constants.dart';
 import 'package:turf_trek/Widgets/background_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -76,6 +77,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           elevation: 0.0,
+          // iconTheme: IconThemeData(color: Colors.green.shade900),
           backgroundColor: Colors.transparent,
           title: Text(
             'Confirm',
@@ -135,7 +137,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
                     child: ClipOval(
                       child: Image.network(
-                        'http://192.168.29.202:8080/admin/upload/${widget.postImg}',
+                        '${IMG_URL}${widget.postImg}',
                         width: 55,
                         height: 60,
                         fit: BoxFit.cover,

@@ -16,8 +16,9 @@ class _TurfBookingDetailsState extends State<TurfBookingDetails> {
       child: Scaffold(
         backgroundColor: Colors.yellow.shade50.withOpacity(0.9),
         appBar: AppBar(
-          automaticallyImplyLeading: false,
+          // automaticallyImplyLeading: false,
           elevation: 0.0,
+          iconTheme: IconThemeData(color: Colors.green.shade900),
           backgroundColor: Colors.transparent,
           title: Text(
             'Turf Name',
@@ -28,18 +29,19 @@ class _TurfBookingDetailsState extends State<TurfBookingDetails> {
             ),
           ),
         ),
-        body: Container(decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(30),
-            topLeft: Radius.circular(30),
-          ),
-          border: Border(
-            top: BorderSide(
-              color: Colors.green.shade200,
-              width: 2,
+        body: Container(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(30),
+              topLeft: Radius.circular(30),
+            ),
+            border: Border(
+              top: BorderSide(
+                color: Colors.green.shade200,
+                width: 2,
+              ),
             ),
           ),
-        ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -56,20 +58,19 @@ class _TurfBookingDetailsState extends State<TurfBookingDetails> {
                       child: Text(
                         'Date: 14 - 6 - 2024',
                         style: TextStyle(
-                          color: Colors.green.shade900,
-                          fontFamily: 'FontText',
-                          fontWeight: FontWeight.w800,fontSize: 20
-                        ),
+                            color: Colors.green.shade900,
+                            fontFamily: 'FontText',
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20),
                       ),
                     )
                   ],
                 ),
                 Container(
-                  height: 200,
-                  width: double.infinity,
-                  color: Colors.white,
-                  child: const Text('Turf Details')
-                ),
+                    height: 200,
+                    width: double.infinity,
+                    color: Colors.white,
+                    child: const Text('Turf Details')),
                 Row(
                   children: [
                     Icon(
@@ -84,15 +85,16 @@ class _TurfBookingDetailsState extends State<TurfBookingDetails> {
                         style: TextStyle(
                             color: Colors.green.shade900,
                             fontFamily: 'FontText',
-                            fontWeight: FontWeight.w800,fontSize: 20
-                        ),
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20),
                       ),
                     ),
                   ],
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Text('Address : It is a long established fact that It is a long established..'),
+                  child: Text(
+                      'Address : It is a long established fact that It is a long established..'),
                 ),
                 Image.asset('assets/images/map.png'),
               ],

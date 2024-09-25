@@ -218,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             value: city['city'],
                             child: Text(
                               city['city'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontFamily: 'FontText',
                               ),
@@ -230,22 +230,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NotificationScreen(),
-                      ),
-                    );
-                  },
-                  icon: Icon(
-                    Icons.notifications,
-                    color: Colors.green.shade900,
-                  ),
-                ),
-              ],
+              // actions: [
+              //   IconButton(
+              //     onPressed: () {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (context) => const NotificationScreen(),
+              //         ),
+              //       );
+              //     },
+              //     icon: Icon(
+              //       Icons.notifications,
+              //       color: Colors.green.shade900,
+              //     ),
+              //   ),
+              // ],
             ),
             const SliverToBoxAdapter(
               child: Column(
@@ -311,7 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 child: Text(
                                   sportsItem[index],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontFamily: 'FontText',
                                   ),
                                 ),

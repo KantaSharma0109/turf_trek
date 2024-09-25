@@ -1188,7 +1188,7 @@ class _TurfBookingScreenState extends State<TurfBookingScreen> {
                       child: Container(
                         // width: double.infinity, // Full width of the screen
                         width: double.infinity, // Full width of the screen
-                        height: 70, // Adjust height to match the design
+                        height: 60, // Adjust height to match the design
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
                             colors: [
@@ -1234,13 +1234,13 @@ class _TurfBookingScreenState extends State<TurfBookingScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
                           ),
                           child: const Text(
                             'Continue To Pay',
                             // style: TextStyle(fontSize: 18),
                             style: TextStyle(
-                              fontSize: 30,
+                              fontSize: 25,
                               fontFamily: 'FontText',
                               fontWeight: FontWeight.w600,
                               color: Colors.white,
