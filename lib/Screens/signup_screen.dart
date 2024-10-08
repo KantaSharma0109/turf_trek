@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:turf_trek/Widgets/background_theme.dart';
 import 'package:turf_trek/Widgets/logo_widget.dart';
 import 'package:turf_trek/Widgets/navigate_tabs.dart';
+import 'package:turf_trek/model/constants.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -106,7 +107,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Future<void> _navigateToHome() async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.29.202:8080/admin/api/signup.php'),
+        Uri.parse('${BASE_URL}signup.php'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'name': _nameController.text,

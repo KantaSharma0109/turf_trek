@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // for jsonDecode
 import 'package:turf_trek/model/constants.dart';
-import 'package:turf_trek/Screens/notifications_screen.dart';
+
 import 'package:turf_trek/Screens/turf_booking_screen.dart';
 import 'package:turf_trek/Widgets/background_theme.dart';
 import 'package:turf_trek/Widgets/homepage_slider.dart';

@@ -1,9 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:turf_trek/model/constants.dart';
 import 'package:turf_trek/Widgets/background_theme.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class PaymentScreen extends StatefulWidget {
   final String? turfId;
@@ -41,32 +39,6 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   bool _isChecked = false;
-
-  Future<void> _launchUrl(String url) async {
-    final Uri uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  void _launchURL(String url) async {
-    final Uri uri = Uri.parse(url);
-    try {
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri);
-      } else {
-        throw 'Could not launch $url';
-      }
-    } catch (e) {
-      // Show an error message
-      final snackBar = SnackBar(
-        content: Text('Failed to open the link: $e'),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,20 +78,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   child: Column(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //       Text('User ID: ${widget.userId}',
-                //           style: TextStyle(fontSize: 16)),
-                //       Text('Turf ID: ${widget.turfId}',
-                //           style: TextStyle(fontSize: 16)),
-                //       Text('Truf Name: ${widget.turfName}',
-                //           style: TextStyle(fontSize: 16)),
-                //     ],
-                //   ),
-                // ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -228,28 +186,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                // Text(
-                //   'Convenience Fee',
-                //   style: TextStyle(
-                //       color: Colors.green.shade900,
-                //       fontFamily: 'FontText',
-                //       fontSize: 25,
-                //       fontWeight: FontWeight.bold),
-                // ),
-                //   Text(
-                //     // '₹00.00',
-                //     'Price: ₹${widget.price}',
-                //     style: TextStyle(
-                //         color: Colors.green.shade900,
-                //         fontFamily: 'FontText',
-                //         fontSize: 25,
-                //         fontWeight: FontWeight.bold),
-                //   ),
-                // ],
-                // ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -286,97 +222,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   thickness: 2,
                   color: Colors.green.shade300,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Checkbox(
-                      value: _isChecked,
-                      activeColor: Colors.green,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          _isChecked = value ?? false;
-                        });
-                      },
-                    ),
-                    // Flexible(
-                    //   child: RichText(
-                    //     text: TextSpan(
-                    //       text: 'I accept the ',
-                    //       style: const TextStyle(
-                    //           color: Colors.green, fontSize: 15),
-                    //       children: <TextSpan>[
-                    //         TextSpan(
-                    //           text: 'Terms & Conditions',
-                    //           style: const TextStyle(color: Colors.orange),
-                    //           recognizer: TapGestureRecognizer()..onTap = () {},
-                    //         ),
-                    //         const TextSpan(
-                    //           text: ' & ',
-                    //         ),
-                    //         TextSpan(
-                    //           text: 'Privacy Policy',
-                    //           style: const TextStyle(color: Colors.orange),
-                    //           recognizer: TapGestureRecognizer()..onTap = () {},
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    Flexible(
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'I accept the ',
-                          style: const TextStyle(
-                              color: Colors.green, fontSize: 15),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Terms & Conditions',
-                              style: const TextStyle(color: Colors.orange),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  _launchUrl(
-                                      'https://snpublicity.com/privacy-policy.html');
-                                },
-                            ),
-                            const TextSpan(
-                              text: ' & ',
-                            ),
-                            TextSpan(
-                              text: 'Privacy Policy',
-                              style: const TextStyle(color: Colors.orange),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  _launchUrl(
-                                      'https://snpublicity.com/privacy-policy.html');
-                                },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: Text(
-                    'Cancellation Policy',
-                    style: TextStyle(
-                        fontFamily: 'FontTitle',
-                        fontSize: 30,
-                        color: Colors.green.shade900),
-                  ),
-                ),
-                const Flexible(
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'It is a long established fact that It is a long established fact that',
-                    ),
-                  ),
-                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -399,24 +244,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       elevation: 0.0,
                       backgroundColor: Colors.transparent,
                     ),
-                    onPressed: () {
-                      if (!_isChecked) {
-                        final snackBar = SnackBar(
-                          elevation: 1,
-                          backgroundColor: Colors.yellow.shade100,
-                          content: const Text(
-                            'Please accept Terms & Conditions',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.red,
-                            ),
-                          ),
-                          duration: const Duration(seconds: 2),
-                        );
-
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                    },
+                    onPressed: () {},
                     child: Text(
                       // 'Pay  ₹300.00',
                       'Price: ₹${widget.price}',

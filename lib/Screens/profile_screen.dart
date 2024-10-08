@@ -187,7 +187,7 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 Container(
                   decoration: BoxDecoration(

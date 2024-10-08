@@ -5,39 +5,6 @@ class SharedPrefsHelper {
   static const String _keyUserName = 'customer_name';
   static const String _keyUserNum = 'mobile_num';
 
-  // // Function to get user ID from SharedPreferences
-  // static Future<String?> getUserId() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   return prefs.getString(_userIdKey);
-  // }
-
-  // static Future<String?> getUserName() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   return prefs.getString(_keyUserName);
-  // }
-
-  // static Future<String?> getUserNum() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   return prefs.getString(_keyUserNum);
-  // }
-
-  // // Function to save user ID to SharedPreferences (if needed elsewhere)
-  // static Future<void> saveUserId(String userId) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   await prefs.setString(_userIdKey, userId);
-  // }
-
-  // static Future<void> saveUserName(String userName) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   await prefs.setString(_keyUserName, userName);
-  // }
-
-  // static Future<void> saveUserNum(String userNum) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   await prefs.setString(_keyUserNum, userNum);
-  // }
-
-  // Function to clear user data from SharedPreferences
   static Future<void> clearUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove(_userIdKey);
