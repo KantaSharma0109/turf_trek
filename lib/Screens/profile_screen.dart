@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turf_trek/Screens/signup_screen.dart';
 import 'package:turf_trek/Widgets/background_theme.dart';
 
 import 'package:turf_trek/Widgets/dialog_box.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'profile_edit_screen.dart';
 
 class UserProfile extends StatefulWidget {
@@ -22,30 +22,13 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  String _customerName = 'N/A';
-  String _customerId = 'N/A';
-  String _mobileNum = 'N/A';
   @override
   void initState() {
     super.initState();
-    _loadUserData();
-  }
-
-  Future<void> _loadUserData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _customerName = prefs.getString('customer_name') ?? 'N/A';
-      _customerId = prefs.getString('customer_id') ?? 'N/A';
-      _mobileNum = prefs.getString('mobile_num') ?? 'N/A';
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // Ensure that parameters are not null
-    // final customerId = widget.customerId ?? 'N/A';
-    // final customerName = widget.customerName ?? 'N/A';
-    // final mobileNum = widget.mobileNum ?? 'N/A';
     return Container(
       decoration: BackGroundTheme(),
       child: Scaffold(
@@ -96,26 +79,8 @@ class _UserProfileState extends State<UserProfile> {
                       'assets/images/user.png',
                     ),
                   ),
-                  // title: Text(
-                  //   'Deepak Majhi',
-                  //   style: TextStyle(color: Colors.white, fontSize: 25),
-                  // ),
-                  // subtitle: const Wrap(
-                  //   children: [
-                  //     Text(
-                  //       'mail ID: deepakmajhi098@gmail.com',
-                  //       style: TextStyle(
-                  //         color: Colors.white,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  // title: Text(
-                  //   widget.customerName, // Use the customer name here
-                  //   style: const TextStyle(color: Colors.white, fontSize: 25),
-                  // ),
                   title: Text(
-                    _customerName, // Display customer's name
+                    widget.customerName, // Display customer's name
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 25,
@@ -124,58 +89,28 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                   subtitle: Wrap(
                     children: [
-                      // Text(
-                      //   // 'Mail ID: ${widget.customerId}', // Use the customer ID here
-                      //   'Customer ID: $_customerId',
-                      //   style: const TextStyle(
-                      //     color: Colors.white,
-                      //   ),
-                      // ),
                       const SizedBox(height: 5),
                       Text(
-                        // 'Mobile Number: ${widget.mobileNum}', // Use the mobile number here
-                        '$_mobileNum',
+                        '${widget.mobileNum}',
                         style: const TextStyle(
                           color: Colors.white,
                         ),
                       ),
                     ],
                   ),
-                  // trailing: IconButton(
-                  //   onPressed: () {
-                  //     print("Navigating to EditProfile");
-                  //     print("Customer ID: ${widget.customerId}"); // Check here
-                  //     print("Customer Name: ${widget.customerName}");
-                  //     print("Mobile Num: ${widget.mobileNum}");
-                  //     Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //         builder: (context) => EditProfile(
-                  //           customerId: widget.customerId,
-                  //           customerName: widget.customerName,
-                  //           mobileNum: widget.mobileNum,
-                  //         ),
-                  //       ),
-                  //     );
-                  //   },
-                  //   icon: const Icon(
-                  //     Icons.edit,
-                  //     color: Colors.white,
-                  //   ),
-                  // ),
                   trailing: IconButton(
                     onPressed: () {
                       print("Navigating to EditProfile");
-                      print("Customer ID: $_customerId");
-                      print("Customer Name: $_customerName");
-                      print("Mobile Num: $_mobileNum");
+                      print("Customer ID: ${widget.customerId}");
+                      print("Customer Name: ${widget.customerName}");
+                      print("Mobile Num: ${widget.mobileNum}");
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => EditProfile(
-                            customerId: _customerId,
-                            customerName: _customerName,
-                            mobileNum: _mobileNum,
+                            customerId: widget.customerId,
+                            customerName: widget.customerName,
+                            mobileNum: widget.mobileNum,
                           ),
                         ),
                       );
@@ -204,25 +139,19 @@ class _UserProfileState extends State<UserProfile> {
                         leadingIcon: Icons.question_mark_rounded,
                         onTap: () => _showModalBottomSheet(context),
                       ),
-
-                      // const SizedBox(
-                      //     height: 20), // Add some space between tiles
+                      const SizedBox(height: 20),
                       // CustomListTile(
-                      //   title: 'Invite a Friend',
-                      //   subtitle: 'Share the Turf Trek app',
-                      //   leadingIcon: Icons.share,
+                      //   title: 'Rate Us',
+                      //   subtitle: 'Rate the Turf Trek App',
+                      //   leadingIcon: Icons.star_rounded,
                       //   onTap: () => _showModalBottomSheet(context),
                       // ),
-
-                      const SizedBox(height: 20),
-
                       CustomListTile(
                         title: 'Rate Us',
                         subtitle: 'Rate the Turf Trek App',
                         leadingIcon: Icons.star_rounded,
-                        onTap: () => _showModalBottomSheet(context),
+                        onTap: () => _rateUs(), // Use the method for Rate Us
                       ),
-
                       const SizedBox(height: 20),
                       CustomListTile(
                         title: 'Logout',
@@ -230,14 +159,6 @@ class _UserProfileState extends State<UserProfile> {
                         leadingIcon: Icons.logout_rounded,
                         onTap: () => _showCustomDialog(context, 'logout'),
                       ),
-
-                      // SizedBox(height: 20),
-                      // CustomListTile(
-                      //   title: 'Delete My Account',
-                      //   subtitle: '',
-                      //   leadingIcon: Icons.person_off_rounded,
-                      //   onTap: () => _showCustomDialog(context, 'delete'),
-                      // ),
                     ],
                   ),
                 )
@@ -249,34 +170,40 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 
-  // void _showCustomDialog(BuildContext context, String text) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return DialogBox(text: text);
-  //     },
-  //   );
-  // }
-  // void _showCustomDialog(BuildContext context, String text) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return DialogBox(
-  //         text: text,
-  //         onLogout: () {
-  //           Navigator.of(context).pop(); // Close the dialog
-  //           Navigator.of(context).pop(); // Close the UserProfile page
-  //           Navigator.pushReplacement(
-  //             context,
-  //             MaterialPageRoute(
-  //                 builder: (context) =>
-  //                     SignUpPage()), // Replace with your SignUpPage
-  //           );
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
+  void _rateUs() async {
+    const String url =
+        'https://play.google.com/store/apps/details?id=com.yourapp'; // Replace with your app's link
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      // Show an AlertDialog if the link cannot be opened
+      _showAlertDialog(context);
+    }
+  }
+
+  void _showAlertDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Link Unavailable'),
+          content: const Text('Currently, the link is not available.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text(
+                'OK',
+                style: TextStyle(color: Colors.green),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _showCustomDialog(BuildContext context, String text) {
     showDialog(
       context: context,
@@ -301,85 +228,100 @@ class _UserProfileState extends State<UserProfile> {
 
   void _showModalBottomSheet(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(15.0),
-          ),
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(15.0),
         ),
-        builder: (context) {
-          return Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15),
-                topRight: Radius.circular(15),
-              ),
-              color: Color(0XFFFFFDEB),
+      ),
+      builder: (context) {
+        return Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
             ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Center(
-                    child: Text(
-                      'Need Help !',
-                      style: TextStyle(
-                        fontSize: 35,
-                        fontFamily: 'FontTitle',
-                        color: Colors.green.shade900,
-                      ),
+            color: Color(0XFFFFFDEB),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: Text(
+                    'Need Help!',
+                    style: TextStyle(
+                      fontSize: 35,
+                      fontFamily: 'FontTitle',
+                      color: Colors.green.shade900,
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      'For any queries or concerns Turf Trek App Support team.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.green,
-                      ),
+                ),
+                const SizedBox(height: 20),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    'For any queries or concerns, chat with the Turf Trek App Support team.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.green,
                     ),
                   ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      gradient: const LinearGradient(
-                        colors: [
-                          Color(0xFF326A1A),
-                          Color(0xFF499B26),
-                          Color(0xFF63D033),
-                        ],
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                      ),
-                    ),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        elevation: 0.0,
-                      ),
-                      onPressed: () {
-                        // Validate OTP entered and proceed
-                        // Example logic: compare _otpController.text with expected OTP
-                      },
-                      child: const Text('Chat us on Whatsapp'),
+                ),
+                const SizedBox(height: 40),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color(0xFF326A1A),
+                        Color(0xFF499B26),
+                        Color(0xFF63D033),
+                      ],
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
                     ),
                   ),
-                ],
-              ),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      elevation: 0.0,
+                    ),
+                    onPressed: () {
+                      _openWhatsAppChat();
+                    },
+                    child: const Text('Chat us on WhatsApp'),
+                  ),
+                ),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
+  }
+
+  void _openWhatsAppChat() async {
+    const String phoneNumber = '917597363636'; // Use the correct format
+    const String url = 'https://wa.me/$phoneNumber';
+
+    try {
+      // Check if the URL can be launched
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url));
+        print("WhatsApp URL: $url"); // Log the URL for debugging
+      } else {
+        _showAlertDialog(context);
+      }
+    } catch (e) {
+      // Catch any exceptions and show alert dialog
+      _showAlertDialog(
+        context,
+      );
+    }
   }
 }
 

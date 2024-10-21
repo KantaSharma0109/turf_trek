@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:turf_trek/model/shared_prefs_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:turf_trek/Widgets/background_theme.dart';
 import 'package:turf_trek/Widgets/logo_widget.dart';
@@ -115,25 +116,22 @@ class _SignUpPageState extends State<SignUpPage> {
         }),
       );
 
-      // Print raw response
-      print('Response body: ${response.body}');
-
       final responseData = jsonDecode(response.body);
 
       if (responseData['status'] == 'success') {
         final customerId = responseData['customer_id'].toString();
         final customerName = responseData['customer_name'].toString();
         final mobileNum = responseData['mobile_num'].toString();
-        print('Customer ID: $customerId');
-        print('Customer Name: $customerName');
-        print('Mobile Number: $mobileNum');
 
-        SharedPreferences prefs = await SharedPreferences.getInstance();
+        // Store user data in SharedPreferences using the helper class
+        await SharedPrefsHelper()
+            .saveUserData(customerId, customerName, mobileNum);
+
+        // Set the login status to true
+        final prefs = await SharedPreferences.getInstance();
         await prefs.setBool('is_logged_in', true);
-        await prefs.setString('customer_id', customerId);
-        await prefs.setString('customer_name', customerName);
-        await prefs.setString('mobile_num', mobileNum);
 
+        // Navigate to home page with the stored user data
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(

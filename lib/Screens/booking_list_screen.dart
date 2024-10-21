@@ -20,9 +20,9 @@ class BookingListScreen extends StatefulWidget {
 }
 
 class _BookingListScreenState extends State<BookingListScreen> {
-  String _customerName = 'N/A';
-  String _customerId = 'N/A';
-  String _mobileNum = 'N/A';
+  // String _customerName = 'N/A';
+  // String _customerId = 'N/A';
+  // String _mobileNum = 'N/A';
   List<dynamic> upcomingBookings = [];
   List<dynamic> pastBookings = [];
   int selectedList = 1;
@@ -30,25 +30,26 @@ class _BookingListScreenState extends State<BookingListScreen> {
   @override
   void initState() {
     super.initState();
-    _loadUserData();
+    // _loadUserData();
+    _fetchBookings();
   }
 
-  Future<void> _loadUserData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _customerName = prefs.getString('customer_name') ?? 'N/A';
-      _customerId = prefs.getString('customer_id') ?? 'N/A';
-      _mobileNum = prefs.getString('mobile_num') ?? 'N/A';
-    });
+  // Future<void> _loadUserData() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     _customerName = prefs.getString('customer_name') ?? 'N/A';
+  //     _customerId = prefs.getString('customer_id') ?? 'N/A';
+  //     _mobileNum = prefs.getString('mobile_num') ?? 'N/A';
+  //   });
 
-    await _fetchBookings();
-  }
+  // await _fetchBookings();
+  // }
 
   Future<void> _fetchBookings() async {
     try {
       final response = await http.post(
         Uri.parse('${BASE_URL}get_bookings.php'),
-        body: {'customer_id': _customerId},
+        body: {'customer_id': widget.customerId},
       );
 
       if (response.statusCode == 200) {
@@ -103,65 +104,77 @@ class _BookingListScreenState extends State<BookingListScreen> {
             ),
             // Booking list
             Expanded(
-              child: ListView.builder(
-                itemCount: selectedList == 1
-                    ? upcomingBookings.length
-                    : pastBookings.length,
-                itemBuilder: (BuildContext context, int index) {
-                  var booking = selectedList == 1
-                      ? upcomingBookings[index]
-                      : pastBookings[index];
-
-                  return Card(
-                    color: Colors.yellow.shade50,
-                    margin:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                    elevation: 3,
-                    shadowColor: Colors.blueGrey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: ListTile(
-                      onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const TurfBookingDetails(),
-                        //   ),
-                        // );
-                      },
-                      contentPadding: const EdgeInsets.all(10.0),
-                      horizontalTitleGap: 0.0,
-                      leading: Icon(
-                        Icons.calendar_month,
-                        color: Colors.green.shade900,
-                      ),
-                      title: Text(
-                        booking['turf_name'] ?? 'Turf Name',
+              child: selectedList == 1 && upcomingBookings.isEmpty ||
+                      selectedList == 2 && pastBookings.isEmpty
+                  ? Center(
+                      child: Text(
+                        'Booking Not Available',
                         style: TextStyle(
-                            fontFamily: 'FontTitle',
-                            color: Colors.green.shade900,
-                            fontSize: 25),
-                      ),
-                      // subtitle: Text(
-                      //   'Date: ${booking['date']}\nTime: ${booking['from_time']} - ${booking['to_time']}',
-                      //   style: const TextStyle(
-                      //       color: Colors.green, fontFamily: 'FontExtra'),
-                      // ),
-                      subtitle: Text(
-                        'Date: ${booking['date']}\n'
-                        'Time: ${booking['from_time']} - ${booking['to_time']}\n'
-                        'Court: ${booking['category']}\n'
-                        'Price: ₹${booking['price']}',
-                        style: const TextStyle(
-                          color: Colors.green,
-                          fontFamily: 'FontExtra',
+                          fontSize: 20,
+                          color: Colors.green.shade900,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
+                    )
+                  : ListView.builder(
+                      itemCount: selectedList == 1
+                          ? upcomingBookings.length
+                          : pastBookings.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        var booking = selectedList == 1
+                            ? upcomingBookings[index]
+                            : pastBookings[index];
+
+                        return Card(
+                          color: Colors.yellow.shade50,
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 5),
+                          elevation: 3,
+                          shadowColor: Colors.blueGrey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: ListTile(
+                            onTap: () {
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const TurfBookingDetails(),
+                              //   ),
+                              // );
+                            },
+                            contentPadding: const EdgeInsets.all(10.0),
+                            horizontalTitleGap: 0.0,
+                            leading: Icon(
+                              Icons.calendar_month,
+                              color: Colors.green.shade900,
+                            ),
+                            title: Text(
+                              booking['turf_name'] ?? 'Turf Name',
+                              style: TextStyle(
+                                  fontFamily: 'FontTitle',
+                                  color: Colors.green.shade900,
+                                  fontSize: 25),
+                            ),
+                            // subtitle: Text(
+                            //   'Date: ${booking['date']}\nTime: ${booking['from_time']} - ${booking['to_time']}',
+                            //   style: const TextStyle(
+                            //       color: Colors.green, fontFamily: 'FontExtra'),
+                            // ),
+                            subtitle: Text(
+                              'Date: ${booking['date']}\n'
+                              'Time: ${booking['from_time']} - ${booking['to_time']}\n'
+                              'Court: ${booking['category']}\n'
+                              'Price: ₹${booking['price']}',
+                              style: const TextStyle(
+                                color: Colors.green,
+                                fontFamily: 'FontExtra',
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             ),
           ],
         ),

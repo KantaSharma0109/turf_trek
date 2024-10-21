@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert'; // for jsonDecode
 import 'package:turf_trek/model/constants.dart';
 
@@ -31,15 +32,28 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> cities = [];
   List<Map<String, dynamic>> turfs = []; // Store fetched turfs
   Map<String, Map<String, dynamic>> sportDetails = {};
+  // String _customerName = 'N/A';
+  // String _customerId = 'N/A';
+  // String _mobileNum = 'N/A';
 
   @override
   void initState() {
     super.initState();
+    // _loadUserData();
     fetchCities();
     selectedSport = 0; // Set default sport to 'All'
     fetchSportsItems(selectedCityId); // Automatically fetch sports for Bhilwara
     fetchTurfs(selectedCityId); // Fetch all turfs for default city and sport
   }
+
+  // Future<void> _loadUserData() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     _customerName = prefs.getString('customer_name') ?? 'N/A';
+  //     _customerId = prefs.getString('customer_id') ?? 'N/A';
+  //     _mobileNum = prefs.getString('mobile_num') ?? 'N/A';
+  //   });
+  // }
 
   Future<void> fetchCities() async {
     try {
@@ -438,6 +452,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   // shape: const StadiumBorder(),
                                 ),
                                 onPressed: () {
+                                  print('Customer ID: ${widget.customerId}');
+                                  print(
+                                      'Customer Name: ${widget.customerName}');
+                                  print('Mobile Number: ${widget.mobileNum}');
+
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

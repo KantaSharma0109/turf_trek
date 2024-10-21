@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert'; // For JSON decoding
 import 'package:turf_trek/model/constants.dart';
 import 'package:turf_trek/Screens/payment_screen.dart';
@@ -35,6 +36,9 @@ class _TurfBookingScreenState extends State<TurfBookingScreen> {
   String? _selectedCourt2;
   String? _allselectedCourt;
   bool _isAllSelected = false;
+  // String _customerName = 'N/A';
+  // String _customerId = 'N/A';
+  // String _mobileNum = 'N/A';
 
   List<String> _1courtSelected = [];
   List<String> _2courtSelected = [];
@@ -56,6 +60,15 @@ class _TurfBookingScreenState extends State<TurfBookingScreen> {
     });
   }
 
+  // Future<void> _loadUserData() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     _customerName = prefs.getString('customer_name') ?? 'N/A';
+  //     _customerId = prefs.getString('customer_id') ?? 'N/A';
+  //     _mobileNum = prefs.getString('mobile_num') ?? 'N/A';
+  //   });
+  // }
+
   void _selectDate(int index) {
     setState(() {
       _selectedDateIndex = index; // Update the selected date
@@ -72,6 +85,7 @@ class _TurfBookingScreenState extends State<TurfBookingScreen> {
   void initState() {
     super.initState();
     _fetchCategories();
+    // _loadUserData();
   }
 
   Future<void> _fetchCategories() async {
@@ -531,8 +545,10 @@ class _TurfBookingScreenState extends State<TurfBookingScreen> {
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.green, // Text color
                     ),
+
                     child: const Text(
                       'Check Avilablity',
+
                       // style: TextStyle(fontSize: 16),
                       style: TextStyle(
                           fontSize: 20,
@@ -623,6 +639,10 @@ class _TurfBookingScreenState extends State<TurfBookingScreen> {
                         ),
                         child: ElevatedButton(
                           onPressed: () {
+                            print('Customer ID: ${widget.customerId}');
+                            print('Customer Name: ${widget.customerName}');
+                            print('Mobile Number: ${widget.mobileNum}');
+
                             // Navigate to PaymentScreen with required data
                             Navigator.push(
                               context,

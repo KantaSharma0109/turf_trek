@@ -23,16 +23,12 @@ class NavigateTabs extends StatefulWidget {
 
 class _NavigateTabsState extends State<NavigateTabs> {
   int _selectedIndex = 1;
-  String _customerName = 'N/A';
-  String _customerId = 'N/A';
-  String _mobileNum = 'N/A';
 
   final List<Widget> _pages = [];
 
   @override
   void initState() {
     super.initState();
-    _loadUserData();
 
     _pages.add(BookingListScreen(
       customerId: widget.customerId,
@@ -51,21 +47,12 @@ class _NavigateTabsState extends State<NavigateTabs> {
     ));
   }
 
-  Future<void> _loadUserData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _customerName = prefs.getString('customer_name') ?? 'N/A';
-      _customerId = prefs.getString('customer_id') ?? 'N/A';
-      _mobileNum = prefs.getString('mobile_num') ?? 'N/A';
-    });
-  }
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      print('Customer ID: $_customerId');
-      print('Customer Name: $_customerName');
-      print('Mobile Number: $_mobileNum');
+      print('Customer ID: ${widget.customerId}');
+      // print('Customer Name: $_customerName');
+      // print('Mobile Number: $_mobileNum');
     });
   }
 
