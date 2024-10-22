@@ -23,9 +23,9 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _otpController = TextEditingController();
   bool _otpSent = false;
   String? _verificationId;
-  String? _customerId;
-  String? _customerName;
-  String? _mobileNum;
+  // String? _customerId;
+  // String? _customerName;
+  // String? _mobileNum;
 
   @override
   void dispose() {

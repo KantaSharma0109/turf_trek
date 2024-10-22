@@ -43,7 +43,7 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  bool _isChecked = false;
+  // bool _isChecked = false;
   bool _isQrCodeVisible = false;
 
   final ImagePicker _picker = ImagePicker();

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:turf_trek/Screens/home_screen.dart';
 import 'package:turf_trek/Screens/profile_screen.dart';
