@@ -56,8 +56,8 @@ class _EditProfileState extends State<EditProfile> {
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       // Process data
-      final name = _controllers[0].text;
-      final mobile = _controllers[1].text;
+      // final name = _controllers[0].text;
+      // final mobile = _controllers[1].text;
 
       // Navigate to sign-up page or process the data as needed
       Navigator.pushNamed(
