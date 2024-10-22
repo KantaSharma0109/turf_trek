@@ -21,7 +21,8 @@ class ToggleButton extends StatelessWidget {
           color: Colors.black,
           fontSize: 22,
           fontWeight: FontWeight.bold,
-          decoration: isSelected ? TextDecoration.underline : TextDecoration.none,
+          decoration:
+              isSelected ? TextDecoration.underline : TextDecoration.none,
           decorationThickness: 5,
         ),
       ),

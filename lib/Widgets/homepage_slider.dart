@@ -1,5 +1,5 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class HomeSlider extends StatefulWidget {
   const HomeSlider({super.key});
@@ -15,7 +15,8 @@ class _HomeSliderState extends State<HomeSlider> {
     {"id": 3, "image_path": 'assets/images/turf_image.jpeg'},
   ];
 
-  final CarouselController carouselController = CarouselController();
+  final CarouselSliderController carouselController =
+      CarouselSliderController();
   int currentIndex = 0;
 
   @override

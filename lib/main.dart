@@ -40,14 +40,14 @@ class MyApp extends StatelessWidget {
         future: _checkLoginStatus(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return SplashScreen();
+            return const SplashScreen();
           } else if (snapshot.hasData && snapshot.data!) {
             // If logged in, get user data
             return FutureBuilder<Map<String, String>>(
               future: _getStoredUserData(),
               builder: (context, userSnapshot) {
                 if (userSnapshot.connectionState == ConnectionState.waiting) {
-                  return SplashScreen();
+                  return const SplashScreen();
                 } else if (userSnapshot.hasData) {
                   final userData = userSnapshot.data!;
                   return NavigateTabs(
@@ -56,12 +56,12 @@ class MyApp extends StatelessWidget {
                     mobileNum: userData['mobileNum']!,
                   );
                 } else {
-                  return SignUpPage();
+                  return const SignUpPage();
                 }
               },
             );
           } else {
-            return SignUpPage();
+            return const SignUpPage();
           }
         },
       ),

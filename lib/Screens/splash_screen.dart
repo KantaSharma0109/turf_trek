@@ -15,10 +15,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => SignUpPage(),
+          builder: (context) => const SignUpPage(),
         ),
       );
     });
@@ -28,9 +28,9 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Color(0XFFFFFDEB),
-          image: const DecorationImage(
+          image: DecorationImage(
             image: AssetImage(
               'assets/images/sports_booking.jpeg',
             ),

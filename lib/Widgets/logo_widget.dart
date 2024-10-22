@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 Widget LogoSign({double size = 80.0}) {
   return Center(
     child: ShaderMask(
-      shaderCallback: (bounds) => LinearGradient(
+      shaderCallback: (bounds) => const LinearGradient(
         colors: [
           Color(0xFF326A1A),
           Color(0xFF568C3F),

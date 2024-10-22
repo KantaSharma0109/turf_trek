@@ -50,30 +50,71 @@ class _PaymentScreenState extends State<PaymentScreen> {
   XFile? _receiptImage; // Variable to hold the selected receipt image
   String _enteredPrice = ""; // Variable to hold entered price
 
+  // Future<void> _fetchAndSaveQrCode() async {
+  //   // Replace with your API endpoint to get the QR code image name
+  //   final response = await http.get(Uri.parse('${BASE_URL}fetch_qr.php'));
+
+  //   if (response.statusCode == 200) {
+  //     final data = json.decode(response.body);
+  //     final qrImageName =
+  //         data['qr_img']; // Assuming your response has qr_img field
+
+  //     // Construct the full URL of the image
+  //     final qrImageUrl = '${IMG_URL}qr/$qrImageName';
+
+  //     // Save the image to gallery
+  //     final result = await ImageGallerySaver.saveImage(
+  //       await http.readBytes(Uri.parse(qrImageUrl)), // Read the image bytes
+  //     );
+
+  //     // Check result and show a confirmation dialog
+  //     if (result['isSuccess']) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //           const SnackBar(content: Text('QR Code saved to gallery!')));
+  //     } else {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //           const SnackBar(content: Text('Failed to save QR Code.')));
+  //     }
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(content: Text('Failed to fetch QR Code.')));
+  //   }
+  // }
   Future<void> _fetchAndSaveQrCode() async {
     // Replace with your API endpoint to get the QR code image name
-    final response = await http.get(Uri.parse('${BASE_URL}fetch_qr.php'));
+    final response = await http.post(
+      Uri.parse('${BASE_URL}fetch_qr.php'),
+      body: {
+        'user_id': '${widget.userId}', // Pass userId
+        'turf_id': '${widget.turfId}', // Pass turfId
+      },
+    );
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       final qrImageName =
           data['qr_img']; // Assuming your response has qr_img field
 
-      // Construct the full URL of the image
-      final qrImageUrl = '${IMG_URL}qr/$qrImageName';
+      if (qrImageName != null) {
+        // Construct the full URL of the image
+        final qrImageUrl = '${IMG_URL}qr/$qrImageName';
 
-      // Save the image to gallery
-      final result = await ImageGallerySaver.saveImage(
-        await http.readBytes(Uri.parse(qrImageUrl)), // Read the image bytes
-      );
+        // Save the image to gallery
+        final result = await ImageGallerySaver.saveImage(
+          await http.readBytes(Uri.parse(qrImageUrl)), // Read the image bytes
+        );
 
-      // Check result and show a confirmation dialog
-      if (result['isSuccess']) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('QR Code saved to gallery!')));
+        // Check result and show a confirmation dialog
+        if (result['isSuccess']) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('QR Code saved to gallery!')));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Failed to save QR Code.')));
+        }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Failed to save QR Code.')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('No QR code found.')));
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
