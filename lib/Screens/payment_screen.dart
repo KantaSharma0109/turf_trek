@@ -5,7 +5,7 @@ import 'package:turf_trek/Widgets/background_theme.dart';
 import 'package:http/http.dart' as http; // Import http package
 import 'dart:convert'; // Import for JSON decoding
 import 'dart:io';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -50,36 +50,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
   XFile? _receiptImage; // Variable to hold the selected receipt image
   String _enteredPrice = ""; // Variable to hold entered price
 
-  // Future<void> _fetchAndSaveQrCode() async {
-  //   // Replace with your API endpoint to get the QR code image name
-  //   final response = await http.get(Uri.parse('${BASE_URL}fetch_qr.php'));
-
-  //   if (response.statusCode == 200) {
-  //     final data = json.decode(response.body);
-  //     final qrImageName =
-  //         data['qr_img']; // Assuming your response has qr_img field
-
-  //     // Construct the full URL of the image
-  //     final qrImageUrl = '${IMG_URL}qr/$qrImageName';
-
-  //     // Save the image to gallery
-  //     final result = await ImageGallerySaver.saveImage(
-  //       await http.readBytes(Uri.parse(qrImageUrl)), // Read the image bytes
-  //     );
-
-  //     // Check result and show a confirmation dialog
-  //     if (result['isSuccess']) {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //           const SnackBar(content: Text('QR Code saved to gallery!')));
-  //     } else {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //           const SnackBar(content: Text('Failed to save QR Code.')));
-  //     }
-  //   } else {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //         const SnackBar(content: Text('Failed to fetch QR Code.')));
-  //   }
-  // }
   Future<void> _fetchAndSaveQrCode() async {
     // Replace with your API endpoint to get the QR code image name
     final response = await http.post(
@@ -100,7 +70,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         final qrImageUrl = '${IMG_URL}qr/$qrImageName';
 
         // Save the image to gallery
-        final result = await ImageGallerySaver.saveImage(
+        final result = await ImageGallerySaverPlus.saveImage(
           await http.readBytes(Uri.parse(qrImageUrl)), // Read the image bytes
         );
 
@@ -130,19 +100,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
       });
     }
   }
-
-  // void _submitReceipt() {
-  //   // Handle the receipt submission logic here
-  //   if (_receiptImage != null && _enteredPrice.isNotEmpty) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text('Receipt submitted successfully!')),
-  //     );
-  //   } else {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text('Please fill in all fields.')),
-  //     );
-  //   }
-  // }
 
   Future<void> _submitReceipt() async {
     if (_receiptImage != null && _enteredPrice.isNotEmpty) {
