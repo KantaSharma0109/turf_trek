@@ -231,6 +231,27 @@ class _TurfBookingScreenState extends State<TurfBookingScreen> {
     }
   }
 
+  void _showCategoryUnavailableDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Notice'),
+          content: const Text(
+              'No Courts Available, Please choose another Court Or Turf.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   String _formatTimeTo24Hour(TimeOfDay time) {
     final now = DateTime.now();
     final dateTime =
@@ -360,116 +381,183 @@ class _TurfBookingScreenState extends State<TurfBookingScreen> {
                         child: Row(
                           children: [
                             // Dropdown for 1 Court
-                            Container(
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: _selectedCourt1 == null
-                                    ? Colors.green
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              padding: EdgeInsets.zero,
-                              child: DropdownButton<String>(
-                                underline: const SizedBox.shrink(),
-                                value: _selectedCourt1,
-                                hint: const Text(
-                                  '1 Court',
-                                  style: TextStyle(color: Colors.white),
+                            // Container(
+                            //   height: 30,
+                            //   decoration: BoxDecoration(
+                            //     color: _selectedCourt1 == null
+                            //         ? Colors.green
+                            //         : Colors.white,
+                            //     borderRadius: BorderRadius.circular(5),
+                            //   ),
+                            //   padding: EdgeInsets.zero,
+                            //   child: DropdownButton<String>(
+                            //     underline: const SizedBox.shrink(),
+                            //     value: _selectedCourt1,
+                            //     hint: const Text(
+                            //       '1 Court',
+                            //       style: TextStyle(color: Colors.white),
+                            //     ),
+                            //     items: _1courtSelected.map((String item) {
+                            //       return DropdownMenuItem<String>(
+                            //         value: item,
+                            //         child: Text(
+                            //           item,
+                            //           style: TextStyle(
+                            //               color: Colors.green.shade900),
+                            //         ),
+                            //       );
+                            //     }).toList(),
+                            //     onChanged: (String? newValue) {
+                            //       setState(() {
+                            //         // When selecting 1 Court, deselect the others
+                            //         _selectedCourt1 = newValue;
+                            //         _selectedCourt2 = null;
+                            //         _allselectedCourt = null;
+                            //       });
+                            //     },
+                            //   ),
+                            // ),
+                            GestureDetector(
+                              onTap: () {
+                                // Show dialog if no courts available
+                                if (_1courtSelected.isEmpty) {
+                                  _showCategoryUnavailableDialog();
+                                }
+                              },
+                              child: Container(
+                                height: 30,
+                                decoration: BoxDecoration(
+                                  color: _selectedCourt1 == null
+                                      ? Colors.green
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
-                                items: _1courtSelected.map((String item) {
-                                  return DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(
-                                      item,
-                                      style: TextStyle(
-                                          color: Colors.green.shade900),
-                                    ),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    // When selecting 1 Court, deselect the others
-                                    _selectedCourt1 = newValue;
-                                    _selectedCourt2 = null;
-                                    _allselectedCourt = null;
-                                  });
-                                },
+                                padding: EdgeInsets.zero,
+                                child: DropdownButton<String>(
+                                  underline: const SizedBox.shrink(),
+                                  value: _selectedCourt1,
+                                  hint: const Text(
+                                    '1 Court',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  items: _1courtSelected.isNotEmpty
+                                      ? _1courtSelected.map((String item) {
+                                          return DropdownMenuItem<String>(
+                                            value: item,
+                                            child: Text(
+                                              item,
+                                              style: TextStyle(
+                                                  color: Colors.green.shade900),
+                                            ),
+                                          );
+                                        }).toList()
+                                      : [], // No items to show, dropdown is still clickable
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      // When selecting 1 Court, deselect the others
+                                      _selectedCourt1 = newValue;
+                                      _selectedCourt2 = null;
+                                      _allselectedCourt = null;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
+
                             const SizedBox(width: 10),
                             // Dropdown for 2 Courts
-                            Container(
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: _selectedCourt2 == null
-                                    ? Colors.green
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              padding: EdgeInsets.zero,
-                              child: DropdownButton<String>(
-                                underline: const SizedBox.shrink(),
-                                value: _selectedCourt2,
-                                hint: const Text(
-                                  '2 Courts',
-                                  style: TextStyle(color: Colors.white),
+                            GestureDetector(
+                              onTap: () {
+                                // Show dialog if no courts available
+                                if (_2courtSelected.isEmpty) {
+                                  _showCategoryUnavailableDialog();
+                                }
+                              },
+                              child: Container(
+                                height: 30,
+                                decoration: BoxDecoration(
+                                  color: _selectedCourt2 == null
+                                      ? Colors.green
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
-                                items: _2courtSelected.map((String item) {
-                                  return DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(
-                                      item,
-                                      style: TextStyle(
-                                          color: Colors.green.shade900),
-                                    ),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    // When selecting 2 Courts, deselect the others
-                                    _selectedCourt2 = newValue;
-                                    _selectedCourt1 = null;
-                                    _allselectedCourt = null;
-                                  });
-                                },
+                                padding: EdgeInsets.zero,
+                                child: DropdownButton<String>(
+                                  underline: const SizedBox.shrink(),
+                                  value: _selectedCourt2,
+                                  hint: const Text(
+                                    '2 Courts',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  items: _2courtSelected.isNotEmpty
+                                      ? _2courtSelected.map((String item) {
+                                          return DropdownMenuItem<String>(
+                                            value: item,
+                                            child: Text(
+                                              item,
+                                              style: TextStyle(
+                                                  color: Colors.green.shade900),
+                                            ),
+                                          );
+                                        }).toList()
+                                      : [], // No items to show, dropdown is still clickable
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      // When selecting 2 Courts, deselect the others
+                                      _selectedCourt2 = newValue;
+                                      _selectedCourt1 = null;
+                                      _allselectedCourt = null;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
                             const SizedBox(width: 10),
                             // Dropdown for All Courts
-                            Container(
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: _allselectedCourt == null
-                                    ? Colors.green
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              padding: EdgeInsets.zero,
-                              child: DropdownButton<String>(
-                                underline: const SizedBox.shrink(),
-                                value: _allselectedCourt,
-                                hint: const Text(
-                                  'All Courts',
-                                  style: TextStyle(color: Colors.white),
+                            GestureDetector(
+                              onTap: () {
+                                // Show dialog if no courts available
+                                if (_allcourtSelected.isEmpty) {
+                                  _showCategoryUnavailableDialog();
+                                }
+                              },
+                              child: Container(
+                                height: 30,
+                                decoration: BoxDecoration(
+                                  color: _allselectedCourt == null
+                                      ? Colors.green
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
-                                items: _allcourtSelected.map((String item) {
-                                  return DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(
-                                      item,
-                                      style: TextStyle(
-                                          color: Colors.green.shade900),
-                                    ),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    // When selecting All Courts, deselect the others
-                                    _allselectedCourt = newValue;
-                                    _selectedCourt1 = null;
-                                    _selectedCourt2 = null;
-                                  });
-                                },
+                                padding: EdgeInsets.zero,
+                                child: DropdownButton<String>(
+                                  underline: const SizedBox.shrink(),
+                                  value: _allselectedCourt,
+                                  hint: const Text(
+                                    'All Courts',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  items: _allcourtSelected.isNotEmpty
+                                      ? _allcourtSelected.map((String item) {
+                                          return DropdownMenuItem<String>(
+                                            value: item,
+                                            child: Text(
+                                              item,
+                                              style: TextStyle(
+                                                  color: Colors.green.shade900),
+                                            ),
+                                          );
+                                        }).toList()
+                                      : [], // No items to show, dropdown is still clickable
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      // When selecting All Courts, deselect the others
+                                      _allselectedCourt = newValue;
+                                      _selectedCourt1 = null;
+                                      _selectedCourt2 = null;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
                           ],

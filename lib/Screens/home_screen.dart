@@ -338,12 +338,179 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+            // SliverList(
+            //   delegate: SliverChildBuilderDelegate(
+            //     (BuildContext context, int index) {
+            //       // Display turf data fetched from the database
+            //       final turf =
+            //           turfs[index]; // Get turf data for the current index
+            //       return Container(
+            //         decoration: BoxDecoration(
+            //           color: Colors.transparent,
+            //           borderRadius: BorderRadius.circular(10),
+            //         ),
+            //         margin: const EdgeInsets.symmetric(
+            //             horizontal: 10, vertical: 10),
+            //         height: 200,
+            //         width: double.infinity,
+            //         child: Stack(
+            //           children: [
+            //             SizedBox(
+            //               height: 200, // Adjust the height as per your design
+            //               width: double
+            //                   .infinity, // This ensures the image takes full width
+            //               child: ClipRRect(
+            //                 borderRadius: BorderRadius.circular(20),
+            //                 child: Image.network(
+            //                   '${IMG_URL}${turf['post_img']}',
+            //                   fit: BoxFit.cover,
+            //                   errorBuilder: (context, error, stackTrace) {
+            //                     return Image.asset(
+            //                       'assets/images/offer1.jpeg',
+            //                       fit: BoxFit.cover,
+            //                     ); // Fallback image in case of error
+            //                   },
+            //                 ),
+            //               ),
+            //             ),
+            //             Align(
+            //               alignment: Alignment.bottomCenter,
+            //               child: Container(
+            //                 height: 65,
+            //                 decoration: BoxDecoration(
+            //                   boxShadow: [
+            //                     BoxShadow(
+            //                       color: Colors.green.shade900.withOpacity(0.5),
+            //                       spreadRadius: 1,
+            //                       blurRadius: 1,
+            //                       offset: const Offset(0, 3),
+            //                     ),
+            //                   ],
+            //                   borderRadius: const BorderRadius.only(
+            //                     bottomRight: Radius.circular(20),
+            //                     bottomLeft: Radius.circular(20),
+            //                   ),
+            //                   color: const Color(0xFFFFFDEB),
+            //                 ),
+            //                 child: ListTile(
+            //                   title: Text(
+            //                     turf['turf_name'],
+            //                     style: TextStyle(
+            //                       fontFamily: 'FontTitle',
+            //                       color: Colors.green.shade900,
+            //                       fontSize: 20,
+            //                     ),
+            //                   ),
+            //                   subtitle: Text(
+            //                     turf['address'],
+            //                     style: TextStyle(
+            //                       fontFamily: 'FontExtra',
+            //                       color: Colors.green.shade900,
+            //                       fontSize: 12,
+            //                     ),
+            //                   ),
+            //                   // subtitle: Column(
+            //                   //   crossAxisAlignment: CrossAxisAlignment.start,
+            //                   //   children: [
+            //                   //     Text(
+            //                   //       turf['address'],
+            //                   //       style: TextStyle(
+            //                   //         fontFamily: 'FontExtra',
+            //                   //         color: Colors.green.shade900,
+            //                   //         fontSize: 12,
+            //                   //       ),
+            //                   //     ),
+            //                   //     SizedBox(
+            //                   //         height:
+            //                   //             5), // Space between subtitle and ID
+            //                   //     Text(
+            //                   //       'Turf ID: ${turf['turf_id']}',
+            //                   //       style: TextStyle(
+            //                   //         fontFamily: 'FontExtra',
+            //                   //         color: Colors.green.shade900,
+            //                   //         fontSize: 12,
+            //                   //       ),
+            //                   //     ),
+            //                   //     Text(
+            //                   //       'user ID: ${turf['user_id']}',
+            //                   //       style: TextStyle(
+            //                   //         fontFamily: 'FontExtra',
+            //                   //         color: Colors.green.shade900,
+            //                   //         fontSize: 12,
+            //                   //       ),
+            //                   //     ),
+            //                   //   ],
+            //                   // ),
+            //                   trailing: ElevatedButton(
+            //                     style: ElevatedButton.styleFrom(
+            //                       elevation: 5.0,
+            //                       padding:
+            //                           const EdgeInsets.symmetric(horizontal: 4),
+            //                       backgroundColor: Colors.green,
+            //                       foregroundColor: Colors.white,
+            //                       // shape: const StadiumBorder(),
+            //                     ),
+            //                     onPressed: () {
+            //                       print('Customer ID: ${widget.customerId}');
+            //                       print(
+            //                           'Customer Name: ${widget.customerName}');
+            //                       print('Mobile Number: ${widget.mobileNum}');
+
+            //                       Navigator.push(
+            //                         context,
+            //                         MaterialPageRoute(
+            //                           builder: (context) => TurfBookingScreen(
+            //                             turfName: turf['turf_name'],
+            //                             turfId: turf['turf_id'],
+            //                             userId: turf['user_id'],
+            //                             postImg: turf['post_img'],
+            //                             customerId: widget.customerId,
+            //                             customerName: widget.customerName,
+            //                             mobileNum: widget.mobileNum,
+            //                           ),
+            //                         ),
+            //                       );
+            //                     },
+            //                     child: const Text(
+            //                       'BOOK',
+            //                       style: TextStyle(
+            //                         fontSize: 14,
+            //                         fontFamily: 'FontText',
+            //                       ),
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       );
+            //     },
+            //     childCount: turfs.length,
+            //   ),
+            // )
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  // Display turf data fetched from the database
-                  final turf =
-                      turfs[index]; // Get turf data for the current index
+                  if (turfs.isEmpty) {
+                    // Show message if no turfs are available
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Text(
+                          'Turf not available',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'FontText',
+                            color: Colors.green,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+
+                  // Display turf data if available
+                  final turf = turfs[index];
                   return Container(
                     decoration: BoxDecoration(
                       color: Colors.transparent,
@@ -356,9 +523,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Stack(
                       children: [
                         SizedBox(
-                          height: 200, // Adjust the height as per your design
-                          width: double
-                              .infinity, // This ensures the image takes full width
+                          height: 200,
+                          width: double.infinity,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20),
                             child: Image.network(
@@ -368,7 +534,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return Image.asset(
                                   'assets/images/offer1.jpeg',
                                   fit: BoxFit.cover,
-                                ); // Fallback image in case of error
+                                );
                               },
                             ),
                           ),
@@ -409,38 +575,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontSize: 12,
                                 ),
                               ),
-                              // subtitle: Column(
-                              //   crossAxisAlignment: CrossAxisAlignment.start,
-                              //   children: [
-                              //     Text(
-                              //       turf['address'],
-                              //       style: TextStyle(
-                              //         fontFamily: 'FontExtra',
-                              //         color: Colors.green.shade900,
-                              //         fontSize: 12,
-                              //       ),
-                              //     ),
-                              //     SizedBox(
-                              //         height:
-                              //             5), // Space between subtitle and ID
-                              //     Text(
-                              //       'Turf ID: ${turf['turf_id']}',
-                              //       style: TextStyle(
-                              //         fontFamily: 'FontExtra',
-                              //         color: Colors.green.shade900,
-                              //         fontSize: 12,
-                              //       ),
-                              //     ),
-                              //     Text(
-                              //       'user ID: ${turf['user_id']}',
-                              //       style: TextStyle(
-                              //         fontFamily: 'FontExtra',
-                              //         color: Colors.green.shade900,
-                              //         fontSize: 12,
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
                               trailing: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   elevation: 5.0,
@@ -448,7 +582,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       const EdgeInsets.symmetric(horizontal: 4),
                                   backgroundColor: Colors.green,
                                   foregroundColor: Colors.white,
-                                  // shape: const StadiumBorder(),
                                 ),
                                 onPressed: () {
                                   print('Customer ID: ${widget.customerId}');
@@ -486,9 +619,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   );
                 },
-                childCount: turfs.length,
+                childCount: turfs.isEmpty ? 1 : turfs.length,
               ),
-            )
+            ),
           ],
         ),
       ),
